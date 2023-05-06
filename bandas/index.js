@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
+
+const cors = require("cors");
 app.use(express.json());
 const axios = require("axios");
 
+app.use(cors());
 contador = 0;
 
 const bandas = {};
@@ -11,6 +14,13 @@ const bandas = {};
 app.get("/bandas", (req, res) => {
   res.send(bandas);
 });
+//GET BY ID
+app.get("/bandas/:id", (req, res) => {
+  const id = req.params.id;
+  const banda = bandas[id];
+  res.send(banda);
+});
+
 // POST
 app.post("/bandas", async (req, res) => {
   contador++;
