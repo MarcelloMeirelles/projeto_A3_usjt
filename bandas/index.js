@@ -1,18 +1,49 @@
 const express = require("express");
 const app = express();
-
+const MongoClient = require("mongodb").MongoClient;
 const cors = require("cors");
+require("dotenv").config();
 app.use(express.json());
 const axios = require("axios");
-
 app.use(cors());
+const password = process.env.DB_PASSWORD;
+
+// Conexão com o banco de dados
+async function connectToDB() {
+  const uri =
+    "mongodb+srv://msiuri:5hsJHq1GC1V6QqYD@cluster0.xxbynb6.mongodb.net/?retryWrites=true&w=majority";
+
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  try {
+    await client.connect();
+    console.log("Conectado ao MongoDB Atlas");
+    return client.db("a3_01_2023");
+  } catch (err) {
+    console.log("Erro ao conectar ao MongoDB Atlas: ", err);
+  }
+}
+
+//APP
 contador = 0;
 
 const bandas = {};
 
 // GET
-app.get("/bandas", (req, res) => {
-  res.send(bandas);
+app.get("/bandas", async (req, res) => {
+  const db = await connectToDB();
+  const collection = db.collection("bandas");
+
+  try {
+    const bandas = await collection.find({}).toArray();
+    res.send(bandas);
+  } catch (err) {
+    console.log("Erro ao buscar bandas: ", err);
+    res.status(500).send({ msg: "Erro ao buscar bandas" });
+  }
 });
 //GET BY ID
 app.get("/bandas/:id", (req, res) => {
@@ -23,45 +54,55 @@ app.get("/bandas/:id", (req, res) => {
 
 // POST
 app.post("/bandas", async (req, res) => {
-  contador++;
-  const { nome, integrantes, genero } = req.body;
-  bandas[contador] = {
-    contador,
-    nome,
-    integrantes,
-    genero,
-  };
-  await axios.post("http://localhost:10000/eventos", {
-    tipo: "BandaCriada",
-    dados: {
-      contador,
+  const { nome, qtdMembros, genero, email, senha } = req.body;
+
+  const db = await connectToDB();
+  const collection = db.collection("bandas");
+
+  try {
+    const result = await collection.insertOne({
       nome,
-      integrantes,
+      qtdMembros,
       genero,
-    },
-  });
-  res.status(201).send(bandas[contador]);
-});
-app.post("/eventos", (req, res) => {
-  console.log(req.body);
-  res.status(200).send({ msg: "ok" });
+      email,
+      senha,
+    });
+
+    const novaBanda = {
+      _id: result.insertedId,
+      nome,
+      qtdMembros,
+      genero,
+      email,
+      senha,
+    };
+
+    res.status(201).send(novaBanda);
+  } catch (err) {
+    console.log("Erro ao criar uma nova banda: ", err);
+    res.status(500).send("Erro ao criar uma nova banda");
+  }
 });
 
 // PUT
 app.put("/bandas/:id", async (req, res) => {
   const id = req.params.id;
-  const { nome, integrantes, genero } = req.body;
+  const { nome, qtdMembros, genero, email, senha } = req.body;
   const banda = bandas[id];
   banda.nome = nome;
-  banda.integrantes = integrantes;
+  banda.qtdMembros = qtdMembros;
   banda.genero = genero;
+  banda.email = email;
+  banda.senha = senha;
   await axios.post("http://localhost:10000/eventos", {
     tipo: "BandaAtualizada",
     dados: {
       contador,
       nome,
-      integrantes,
+      qtdMembros,
       genero,
+      email,
+      senha,
     },
   });
   res.send(banda);
