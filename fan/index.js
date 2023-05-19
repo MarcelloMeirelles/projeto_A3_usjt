@@ -21,13 +21,15 @@ app.get("/fan/:id", (req, res) => {
 // POST
 app.post("/fan", async (req, res) => {
   contador++;
-  const { nome, email, idade, senha } = req.body;
+  const { nome, email, idade, senha, cpf, telefone } = req.body;
   fan[contador] = {
     contador,
     nome,
     email,
     idade,
     senha,
+    cpf,
+    telefone,
   };
   await axios.post("http://localhost:10000/eventos", {
     tipo: "Loginfan",
@@ -37,6 +39,8 @@ app.post("/fan", async (req, res) => {
       email,
       idade,
       senha,
+      cpf,
+      telefone,
     },
   });
   res.status(201).send(fan[contador]);
@@ -49,12 +53,14 @@ app.post("/eventos", (req, res) => {
 // PUT
 app.put("/fan/:id", async (req, res) => {
   const id = req.params.id;
-  const { nome, email, idade, senha } = req.body;
+  const { nome, email, idade, senha, cpf, telefone } = req.body;
   const fans = fan[id];
   fans.nome = nome;
   fans.email = email;
   fans.idade = idade;
   fans.senha = senha;
+  fans.cpf = cpf;
+  fans.telefone = telefone;
   await axios.post("http://localhost:10000/eventos", {
     tipo: "FanAtualizado",
     dados: {
@@ -63,6 +69,8 @@ app.put("/fan/:id", async (req, res) => {
       email,
       idade,
       senha,
+      cpf,
+      telefone,
     },
   });
   res.send(fans);
