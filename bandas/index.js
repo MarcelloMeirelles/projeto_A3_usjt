@@ -24,20 +24,24 @@ app.get("/bandas/:id", (req, res) => {
 // POST
 app.post("/bandas", async (req, res) => {
   contador++;
-  const { nome, integrantes, genero } = req.body;
+  const { nome, qtdMembros, genero, email, senha } = req.body;
   bandas[contador] = {
     contador,
     nome,
-    integrantes,
+    qtdMembros,
     genero,
+    email,
+    senha,
   };
   await axios.post("http://localhost:10000/eventos", {
     tipo: "BandaCriada",
     dados: {
       contador,
       nome,
-      integrantes,
+      qtdMembros,
       genero,
+      email,
+      senha,
     },
   });
   res.status(201).send(bandas[contador]);
@@ -50,18 +54,22 @@ app.post("/eventos", (req, res) => {
 // PUT
 app.put("/bandas/:id", async (req, res) => {
   const id = req.params.id;
-  const { nome, integrantes, genero } = req.body;
+  const { nome, qtdMembros, genero, email, senha } = req.body;
   const banda = bandas[id];
   banda.nome = nome;
-  banda.integrantes = integrantes;
+  banda.qtdMembros = qtdMembros;
   banda.genero = genero;
+  banda.email = email;
+  banda.senha = senha;
   await axios.post("http://localhost:10000/eventos", {
     tipo: "BandaAtualizada",
     dados: {
       contador,
       nome,
-      integrantes,
+      qtdMembros,
       genero,
+      email,
+      senha,
     },
   });
   res.send(banda);
