@@ -116,32 +116,26 @@ app.put("/bandas/:id", async (req, res) => {
           email,
           senha,
         },
-      },
-      { returnOriginal: false }
+      }
     );
 
     if (!result.value) {
       return res.status(404).send("Banda não encontrada");
     }
+    // Retorna a banda atualizada
+    const bandasAtualizado = await collection.findOne({ _id: ObjectId(id) });
 
     // Enviar evento para o barramento de eventos
     try {
       await axios.post("http://localhost:10000/eventos", {
         tipo: "BandaAtualizada",
-        dados: {
-          id: result.value._id,
-          nome,
-          qtdMembros,
-          genero,
-          email,
-          senha,
-        },
+        dados: bandasAtualizado,
       });
     } catch (err) {
       console.log("Erro ao enviar evento para o barramento de eventos: ", err);
     }
 
-    res.send(result.value);
+    res.send(bandasAtualizado);
   } catch (err) {
     console.log("Erro ao atualizar a banda: ", err);
     res.status(500).send("Erro ao atualizar a banda");
