@@ -66,13 +66,7 @@ app.post("/bandas", async (req, res) => {
     const db = await connectToDB();
     const collection = db.collection("bandas");
 
-    const banda = {
-      nome,
-      qtdMembros,
-      genero,
-      email,
-      senha,
-    };
+    const banda = { nome, qtdMembros, genero, email, senha };
 
     const result = await collection.insertOne(banda);
     const bandaCriada = {
