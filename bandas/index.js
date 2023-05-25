@@ -2,11 +2,10 @@ const express = require("express");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
 const cors = require("cors");
-require("dotenv").config();
 app.use(express.json());
 const axios = require("axios");
 app.use(cors());
-const password = process.env.DB_PASSWORD;
+const { ObjectId } = require("mongodb");
 
 // Conexão com o banco de dados
 async function connectToDB() {
@@ -28,8 +27,6 @@ async function connectToDB() {
 }
 
 //APP
-contador = 0;
-
 const bandas = {};
 
 // GET
@@ -46,30 +43,30 @@ app.get("/bandas", async (req, res) => {
   }
 });
 //GET BY ID
-app.get("/bandas/:id", (req, res) => {
+app.get("/bandas/:id", async (req, res) => {
   const id = req.params.id;
-  const banda = bandas[id];
-  res.send(banda);
+
+  const db = await connectToDB();
+  const collection = db.collection("bandas");
+
+  try {
+    const banda = await collection.findOne({ _id: ObjectId(id) });
+    res.send(banda);
+  } catch (err) {
+    console.log("Erro ao obter a banda do banco de dados: ", err);
+    res.status(500).send("Erro ao obter a banda do banco de dados");
+  }
 });
 
 // POST
 app.post("/bandas", async (req, res) => {
   const { nome, qtdMembros, genero, email, senha } = req.body;
 
-  const db = await connectToDB();
-  const collection = db.collection("bandas");
-
   try {
-    const result = await collection.insertOne({
-      nome,
-      qtdMembros,
-      genero,
-      email,
-      senha,
-    });
+    const db = await connectToDB();
+    const collection = db.collection("bandas");
 
-    const novaBanda = {
-      _id: result.insertedId,
+    const banda = {
       nome,
       qtdMembros,
       genero,
@@ -77,7 +74,23 @@ app.post("/bandas", async (req, res) => {
       senha,
     };
 
-    res.status(201).send(novaBanda);
+    const result = await collection.insertOne(banda);
+    const bandaCriada = {
+      _id: result.insertedId,
+      ...banda,
+    };
+
+    // Enviar evento para o barramento de eventos
+    try {
+      await axios.post("http://localhost:10000/eventos", {
+        tipo: "BandaCriada",
+        dados: bandaCriada,
+      });
+    } catch (err) {
+      console.log("Erro ao enviar evento para o barramento de eventos: ", err);
+    }
+
+    res.status(201).send(bandaCriada);
   } catch (err) {
     console.log("Erro ao criar uma nova banda: ", err);
     res.status(500).send("Erro ao criar uma nova banda");
@@ -88,36 +101,84 @@ app.post("/bandas", async (req, res) => {
 app.put("/bandas/:id", async (req, res) => {
   const id = req.params.id;
   const { nome, qtdMembros, genero, email, senha } = req.body;
-  const banda = bandas[id];
-  banda.nome = nome;
-  banda.qtdMembros = qtdMembros;
-  banda.genero = genero;
-  banda.email = email;
-  banda.senha = senha;
-  await axios.post("http://localhost:10000/eventos", {
-    tipo: "BandaAtualizada",
-    dados: {
-      contador,
-      nome,
-      qtdMembros,
-      genero,
-      email,
-      senha,
-    },
-  });
-  res.send(banda);
+
+  try {
+    const db = await connectToDB();
+    const collection = db.collection("bandas");
+
+    const result = await collection.findOneAndUpdate(
+      { _id: ObjectId(id) },
+      {
+        $set: {
+          nome,
+          qtdMembros,
+          genero,
+          email,
+          senha,
+        },
+      },
+      { returnOriginal: false }
+    );
+
+    if (!result.value) {
+      return res.status(404).send("Banda não encontrada");
+    }
+
+    // Enviar evento para o barramento de eventos
+    try {
+      await axios.post("http://localhost:10000/eventos", {
+        tipo: "BandaAtualizada",
+        dados: {
+          id: result.value._id,
+          nome,
+          qtdMembros,
+          genero,
+          email,
+          senha,
+        },
+      });
+    } catch (err) {
+      console.log("Erro ao enviar evento para o barramento de eventos: ", err);
+    }
+
+    res.send(result.value);
+  } catch (err) {
+    console.log("Erro ao atualizar a banda: ", err);
+    res.status(500).send("Erro ao atualizar a banda");
+  }
 });
+
 // DELETE
 app.delete("/bandas/:id", async (req, res) => {
   const id = req.params.id;
-  delete bandas[id];
-  await axios.post("http://localhost:10000/eventos", {
-    tipo: "BandaDeletada",
-    dados: {
-      id,
-    },
-  });
-  res.status(200).send(bandas);
+
+  try {
+    const db = await connectToDB();
+    const collection = db.collection("bandas");
+
+    const result = await collection.findOneAndDelete({ _id: ObjectId(id) });
+
+    if (!result.value) {
+      return res.status(404).send("Banda não encontrada");
+    }
+
+    // Enviar evento para o barramento de eventos
+    try {
+      await axios.post("http://localhost:10000/eventos", {
+        tipo: "BandaDeletada",
+        dados: {
+          id: result.value._id,
+        },
+      });
+    } catch (err) {
+      console.log("Erro ao enviar evento para o barramento de eventos: ", err);
+    }
+
+    res.send(result.value);
+  } catch (err) {
+    console.log("Erro ao deletar a banda: ", err);
+    res.status(500).send("Erro ao deletar a banda");
+  }
 });
 
 app.listen(4000, () => {
