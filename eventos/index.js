@@ -68,7 +68,9 @@ app.post("/eventos", async (req, res) => {
     const response = await axios.get(`http://localhost:4000/bandas/${bandaId}`);
     const banda = response.data;
 
-    const evento = { banda, data, horario, local }; // Substitui a variável banda pelo objeto banda obtido
+    const evento = { banda, data, horario, local }; 
+    
+    // Substitui a variável banda pelo objeto banda obtido
 
     const result = await collection.insertOne(evento);
     const eventoCriado = {
