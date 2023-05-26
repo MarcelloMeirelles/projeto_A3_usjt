@@ -16,6 +16,11 @@ export default function Artista() {
   const handleCadastro = async (e) => {
     e.preventDefault();
 
+    if (!validarFormulario()) {
+      toast.error("Preencha todos os campos antes de enviar o cadastro.");
+      return;
+    }
+
     const bandaData = {
       nome: nomeBanda,
       qtdMembros: membros,
@@ -35,6 +40,21 @@ export default function Artista() {
       // Exibir mensagem de erro, tratar falha no cadastro, etc.
     }
   };
+  const [formValido, setFormValido] = useState(false);
+
+  const validarFormulario = () => {
+    if (
+      nomeBanda.trim() === "" ||
+      genero === "" ||
+      membros === 0 ||
+      email.trim() === "" ||
+      telefone.trim() === "" ||
+      senha.trim() === ""
+    ) {
+      return false; // Retorna false se algum campo estiver vazio
+    }
+    return true; // Retorna true se todos os campos estiverem preenchidos
+  };
 
   return (
     <main className="container-espectador">
@@ -51,14 +71,20 @@ export default function Artista() {
             <input
               type="text"
               value={nomeBanda}
-              onChange={(e) => setNomeBanda(e.target.value)}
+              onChange={(e) => {
+                setNomeBanda(e.target.value);
+                setFormValido(validarFormulario());
+              }}
             />
             <div className="form-flex">
               <div className="form-grid">
                 <p>Estilo:</p>
                 <select
                   value={genero}
-                  onChange={(e) => setGenero(e.target.value)}
+                  onChange={(e) => {
+                    setGenero(e.target.value);
+                    setFormValido(validarFormulario());
+                  }}
                 >
                   <option value="">Selecione um estilo</option>
                   <option value="Rock">Rock</option>
@@ -78,7 +104,10 @@ export default function Artista() {
                 <input
                   type="number"
                   value={membros}
-                  onChange={(e) => setMembros(e.target.value)}
+                  onChange={(e) => {
+                    setMembros(e.target.value);
+                    setFormValido(validarFormulario());
+                  }}
                 />
               </div>
             </div>
@@ -87,7 +116,10 @@ export default function Artista() {
             <input
               type="text"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setFormValido(validarFormulario());
+              }}
             />
             <div className="form-flex">
               <div className="form-grid">
@@ -95,7 +127,10 @@ export default function Artista() {
                 <input
                   type="text"
                   value={telefone}
-                  onChange={(e) => setTelefone(e.target.value)}
+                  onChange={(e) => {
+                    setTelefone(e.target.value);
+                    setFormValido(validarFormulario());
+                  }}
                 />
               </div>
               <div className="form-grid">
@@ -103,12 +138,21 @@ export default function Artista() {
                 <input
                   type="password"
                   value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
+                  onChange={(e) => {
+                    setSenha(e.target.value);
+                    setFormValido(validarFormulario());
+                  }}
                 />
               </div>
             </div>
             <div className="cadastrar">
-              <button type="submit">CADASTRAR</button>
+              <button
+                type="submit"
+                to="/eventos"
+                className={!formValido ? "disabled" : ""}
+              >
+                CADASTRAR
+              </button>
             </div>
           </form>
         </div>
