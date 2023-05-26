@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import ArtistaImg from "../../assets/artista.png";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Artista() {
   const [nomeBanda, setNomeBanda] = useState("");
@@ -25,9 +27,11 @@ export default function Artista() {
     try {
       await axios.post("http://localhost:4000/bandas", bandaData);
       console.log("Banda cadastrada com sucesso!");
+      toast.success("Banda cadastrada com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
     } catch (error) {
       console.error("Erro ao cadastrar banda:", error);
+      toast.error("Erro ao cadastrar banda");
       // Exibir mensagem de erro, tratar falha no cadastro, etc.
     }
   };
@@ -109,6 +113,7 @@ export default function Artista() {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </main>
   );
 }
