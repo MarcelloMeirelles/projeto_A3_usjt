@@ -2,7 +2,6 @@ import "./styles.css";
 import Microfone from "../../assets/mic.png";
 import User from "../../assets/user.png";
 import { Link } from "react-router-dom";
-import "./styles.css";
 
 export default function CadastroWho() {
   return (

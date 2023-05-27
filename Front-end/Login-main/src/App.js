@@ -5,6 +5,7 @@ import CadastroWho from "./page/CadastroWho";
 import Espectador from "./page/Espectador";
 import Artista from "./page/Artista";
 import Evento from "./page/Evento";
+import Evento_show from "./page/Evento_show";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/espectador" element={<Espectador />} />
         <Route exact path="/artista" element={<Artista />} />
         <Route exact path="/evento" element={<Evento />} />
+        <Route exact path="/evento_show" element={<Evento_show />} />
       </Routes>
     </Router>
   );
