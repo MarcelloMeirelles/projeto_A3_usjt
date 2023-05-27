@@ -16,19 +16,18 @@ export default function Login() {
       password,
     };
 
-    if (
-      data.email === loginAcess.email &&
-      data.password === loginAcess.password
-    ) {
-      alert(`Access Released ` + data.email);
+    if (data.email === loginAcess.email && data.password === loginAcess.password) {
+      alert(`Access Released ${data.email}`);
+      // Adicione aqui o redirecionamento para a rota desejada após o acesso ser liberado
     } else {
       alert("Access Denied, Sign Up");
     }
   }
+
   return (
     <div className="logon-container">
       <div className="banda">
-        <img src={Banda} />
+        <img src={Banda} alt="Banda" />
       </div>
       <section className="form">
         <h1>LOGIN</h1>
@@ -50,9 +49,9 @@ export default function Login() {
             required
           />
           <div className="footer">
-            <Link className="button" type="submit" to="/">
+            <button className="button" type="submit" >
               Entrar
-            </Link>
+            </button>
           </div>
           <a href="/cadastro" className="ultimo">
             Não tem cadastro? Cadastrar
