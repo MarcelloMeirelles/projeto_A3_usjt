@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
+import Cantor from "../../assets/cantor.png";
 
 export default function CriarEvento() {
   const [bandaId, setBandaId] = useState("");
@@ -51,6 +52,7 @@ export default function CriarEvento() {
       <div className="container-cantor">
         <div className="cantos">
           <Link to="/">←</Link>
+          <img src={Cantor} />
         </div>
         <div className="cadastro">
           <h1>CRIAR EVENTO</h1>

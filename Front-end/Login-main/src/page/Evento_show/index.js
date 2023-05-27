@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./styles.css";
+import Cantor from "../../assets/cantor.png";
+import { Link } from "react-router-dom";
 
 export default function Eventos() {
   const [eventos, setEventos] = useState([]);
@@ -19,6 +21,10 @@ export default function Eventos() {
 
   return (
     <div className="event-cards">
+      <div className="cantos">
+        <Link to="/">←</Link>
+        <img src={Cantor} />
+      </div>
       {eventos.map((evento) => (
         <div className="event-card" key={evento._id}>
           <h3>{evento.banda.nome}</h3>
