@@ -30,23 +30,23 @@ async function connectToDB() {
 const evento = {};
 
 //GET
-app.get("/eventos", async (req, res) => {
+app.get("/evento", async (req, res) => {
   const db = await connectToDB();
-  const collection = db.collection("eventos");
+  const collection = db.collection("evento");
   try {
-    const eventos = await collection.find({}).toArray();
-    res.send(eventos);
+    const evento = await collection.find({}).toArray();
+    res.send(evento);
   } catch (err) {
-    console.log("Erro ao buscar eventos: ", err);
-    res.status(500).send({ msg: "Erro ao buscar eventos" });
+    console.log("Erro ao buscar evento: ", err);
+    res.status(500).send({ msg: "Erro ao buscar evento" });
   }
 });
 //GET BY ID
-app.get("/eventos/:id", async (req, res) => {
+app.get("/evento/:id", async (req, res) => {
   const id = req.params.id;
 
   const db = await connectToDB();
-  const collection = db.collection("eventos");
+  const collection = db.collection("evento");
   try {
     const evento = await collection.findOne({ _id: ObjectId(id) });
     res.send(evento);
@@ -57,19 +57,19 @@ app.get("/eventos/:id", async (req, res) => {
 });
 
 // POST
-app.post("/eventos", async (req, res) => {
+app.post("/evento", async (req, res) => {
   const { bandaId, data, horario, local } = req.body;
 
   try {
     const db = await connectToDB();
-    const collection = db.collection("eventos");
+    const collection = db.collection("evento");
 
     // Obtém o objeto bandas do microserviço bandas com base no ID
     const response = await axios.get(`http://localhost:4000/bandas/${bandaId}`);
     const banda = response.data;
 
-    const evento = { banda, data, horario, local }; 
-    
+    const evento = { banda, data, horario, local };
+
     // Substitui a variável banda pelo objeto banda obtido
 
     const result = await collection.insertOne(evento);
@@ -78,8 +78,8 @@ app.post("/eventos", async (req, res) => {
       ...evento,
     };
 
-    // Enviar evento para o microsserviço de barramento de eventos
-    await axios.post("http://localhost:10000/eventos", {
+    // Enviar evento para o microsserviço de barramento de evento
+    await axios.post("http://localhost:10000/evento", {
       tipo: "eventoCriado",
       dados: eventoCriado,
     });
@@ -92,13 +92,13 @@ app.post("/eventos", async (req, res) => {
 });
 
 // PUT
-app.put("/eventos/:id", async (req, res) => {
+app.put("/evento/:id", async (req, res) => {
   const id = req.params.id;
   const { bandaId, data, horario, local } = req.body;
 
   try {
     const db = await connectToDB();
-    const collection = db.collection("eventos");
+    const collection = db.collection("evento");
 
     // Obtém o objeto bandas do microserviço bandas com base no ID
     const response = await axios.get(`http://localhost:4000/bandas/${bandaId}`);
@@ -113,8 +113,8 @@ app.put("/eventos/:id", async (req, res) => {
     };
     await collection.updateOne({ _id: ObjectId(id) }, { $set: updatedEvent });
 
-    // Enviar evento atualizado para o microsserviço de barramento de eventos
-    await axios.post("http://localhost:10000/eventos", {
+    // Enviar evento atualizado para o microsserviço de barramento de evento
+    await axios.post("http://localhost:10000/evento", {
       tipo: "eventoAtualizado",
       dados: updatedEvent,
     });
@@ -127,12 +127,12 @@ app.put("/eventos/:id", async (req, res) => {
 });
 
 // DELETE
-app.delete("/eventos/:id", async (req, res) => {
+app.delete("/evento/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
     const db = await connectToDB();
-    const collection = db.collection("eventos");
+    const collection = db.collection("evento");
 
     const deletedEvent = await collection.findOneAndDelete({
       _id: ObjectId(id),
