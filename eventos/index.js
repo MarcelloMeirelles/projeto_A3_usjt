@@ -56,7 +56,6 @@ app.get("/evento/:id", async (req, res) => {
   }
 });
 
-// POST
 app.post("/evento", async (req, res) => {
   const { bandaId, data, horario, local } = req.body;
 
@@ -64,13 +63,15 @@ app.post("/evento", async (req, res) => {
     const db = await connectToDB();
     const collection = db.collection("evento");
 
-    // Obtém o objeto bandas do microserviço bandas com base no ID
+    // Obtém os atributos desejados do objeto bandas com base no ID
     const response = await axios.get(`http://localhost:4000/bandas/${bandaId}`);
-    const banda = response.data;
+    const banda = {
+      nome: response.data.nome,
+      qtdMembros: response.data.qtdMembros,
+      genero: response.data.genero,
+    };
 
     const evento = { banda, data, horario, local };
-
-    // Substitui a variável banda pelo objeto banda obtido
 
     const result = await collection.insertOne(evento);
     const eventoCriado = {
@@ -79,7 +80,7 @@ app.post("/evento", async (req, res) => {
     };
 
     // Enviar evento para o microsserviço de barramento de evento
-    await axios.post("http://localhost:10000/evento", {
+    await axios.post("http://localhost:10000/eventos", {
       tipo: "eventoCriado",
       dados: eventoCriado,
     });
@@ -114,7 +115,7 @@ app.put("/evento/:id", async (req, res) => {
     await collection.updateOne({ _id: ObjectId(id) }, { $set: updatedEvent });
 
     // Enviar evento atualizado para o microsserviço de barramento de evento
-    await axios.post("http://localhost:10000/evento", {
+    await axios.post("http://localhost:10000/eventos", {
       tipo: "eventoAtualizado",
       dados: updatedEvent,
     });
@@ -135,7 +136,7 @@ app.delete("/evento/:id", async (req, res) => {
     const collection = db.collection("evento");
 
     const deletedEvent = await collection.findOneAndDelete({
-      _id: ObjectId(id),
+      _id: new ObjectId(id),
     });
 
     if (deletedEvent.value) {

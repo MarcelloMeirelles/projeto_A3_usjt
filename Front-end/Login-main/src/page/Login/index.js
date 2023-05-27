@@ -16,7 +16,10 @@ export default function Login() {
       password,
     };
 
-    if (data.email === loginAcess.email && data.password === loginAcess.password) {
+    if (
+      data.email === loginAcess.email &&
+      data.password === loginAcess.password
+    ) {
       alert(`Access Released ${data.email}`);
       // Adicione aqui o redirecionamento para a rota desejada após o acesso ser liberado
     } else {
@@ -49,7 +52,7 @@ export default function Login() {
             required
           />
           <div className="footer">
-            <button className="button" type="submit" >
+            <button className="button" type="submit">
               Entrar
             </button>
           </div>

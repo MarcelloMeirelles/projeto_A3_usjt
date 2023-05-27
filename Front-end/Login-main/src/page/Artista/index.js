@@ -4,6 +4,7 @@ import ArtistaImg from "../../assets/artista.png";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./styles.css";
 
 export default function Artista() {
   const [nomeBanda, setNomeBanda] = useState("");

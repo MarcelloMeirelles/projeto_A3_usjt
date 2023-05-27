@@ -1,4 +1,4 @@
-.container-espectador {
+.container-evento {
   background-color: white;
   width: 1000px;
   margin: 0 auto;
@@ -30,6 +30,40 @@
 .cadastro form {
   width: 95%;
 }
+.cadastro form input {
+  padding-left: 1rem;
+  color: rgba(68, 68, 68, 0.571);
+  font-size: 20px;
+  margin-bottom: 0px;
+  border-radius: 6px;
+  background-color: #d9d9d9;
+  box-shadow: 1px 1px 4px grey;
+  border: none;
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
+.cadastro {
+  margin-left: 3rem;
+  padding-left: 3rem;
+}
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+.form-flex {
+  display: flex;
+  width: 95%;
+}
+.cadastro form button {
+  width: 40%;
+  background-color: #283162;
+  color: #fff;
+  padding: 10px 10px;
+  border-radius: 15px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
 .cadastro form input,
 select {
   font-size: 20px;
@@ -47,32 +81,6 @@ select {
   width: 100%;
   padding-left: 0rem;
 }
-.cadastro {
-  margin-left: 3rem;
-  padding-left: 3rem;
-}
-.form-grid {
-  display: grid;
-  gap: 1rem;
-}
-.form-grid.membros {
-  width: 50%;
-  margin-left: 1rem;
-}
-.form-flex {
-  display: flex;
-  width: 95%;
-}
-.cadastro form button {
-  width: 40%;
-  background-color: #283162;
-  color: #fff;
-  padding: 10px 10px;
-  border-radius: 15px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  cursor: pointer;
-}
 .cadastrar {
   width: 90%;
   display: flex;
@@ -83,8 +91,4 @@ select {
   text-decoration: none;
   font-size: 35px;
   padding-left: 1rem;
-}
-.button.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
