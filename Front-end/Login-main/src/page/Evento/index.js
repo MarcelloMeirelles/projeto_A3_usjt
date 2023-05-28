@@ -27,8 +27,25 @@ export default function CriarEvento() {
     fetchBandas();
   }, []);
 
+  const validarFormulario = () => {
+    if (
+      bandaId.trim() === "" ||
+      data.trim() === "" ||
+      horario.trim() === "" ||
+      local.trim() === ""
+    ) {
+      return false; // Retorna false se algum campo estiver vazio
+    }
+    return true; // Retorna true se todos os campos estiverem preenchidos
+  };
+
   const handleCriarEvento = async (e) => {
     e.preventDefault();
+
+    if (!validarFormulario()) {
+      toast.error("Preencha todos os campos antes de enviar o cadastro.");
+      return;
+    }
 
     const eventoData = {
       bandaId,
@@ -40,9 +57,11 @@ export default function CriarEvento() {
     try {
       await axios.post("http://localhost:7000/evento", eventoData);
       console.log("Evento criado com sucesso!");
+      toast.success("Fan cadastrado com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
     } catch (error) {
       console.error("Erro ao criar evento:", error);
+      toast.error("Erro ao criar evento");
       // Exibir mensagem de erro, tratar falha na criação do evento, etc.
     }
   };
@@ -52,7 +71,7 @@ export default function CriarEvento() {
       <div className="container-cantor">
         <div className="cantos">
           <Link to="/">←</Link>
-          <img src={Cantor} />
+          <img src={Cantor} alt="Cantor" />
         </div>
         <div className="cadastro">
           <h1>CRIAR EVENTO</h1>
@@ -60,7 +79,6 @@ export default function CriarEvento() {
             <div className="form-flex">
               <div className="form-grid">
                 <p>Selecione a Banda:</p>
-
                 <select
                   value={bandaId}
                   onChange={(e) => setBandaId(e.target.value)}
@@ -77,7 +95,6 @@ export default function CriarEvento() {
             <div className="form-flex">
               <div className="form-grid">
                 <p>Data:</p>
-
                 <input
                   type="date"
                   value={data}
@@ -88,7 +105,6 @@ export default function CriarEvento() {
             <div className="form-flex">
               <div className="form-grid">
                 <p>Horário:</p>
-
                 <input
                   type="time"
                   value={horario}
@@ -99,7 +115,6 @@ export default function CriarEvento() {
             <div className="form-flex">
               <div className="form-grid">
                 <p>Local:</p>
-
                 <input
                   type="text"
                   value={local}
