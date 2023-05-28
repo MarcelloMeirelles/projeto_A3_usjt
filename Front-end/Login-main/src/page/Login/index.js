@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Banda from "../../assets/banda.png";
 import loginAcess from "../../utils/loginAcess";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -21,7 +22,7 @@ export default function Login() {
       data.password === loginAcess.password
     ) {
       alert(`Access Released ${data.email}`);
-      // Adicione aqui o redirecionamento para a rota desejada após o acesso ser liberado
+      navigate("./inicio"); // Redireciona para a página "/inicio" após o acesso ser liberado
     } else {
       alert("Access Denied, Sign Up");
     }
@@ -56,15 +57,15 @@ export default function Login() {
               Entrar
             </button>
           </div>
-          <a href="/cadastro" className="ultimo">
+          <Link to="/cadastro" className="ultimo">
             Não tem cadastro? Cadastrar
-          </a>
-          <a href="/evento" className="ultimo">
+          </Link>
+          <Link to="/evento" className="ultimo">
             Para cadastrar evento.
-          </a>
-          <a href="/evento_show" className="ultimo">
+          </Link>
+          <Link to="/evento_show" className="ultimo">
             Para exibir eventos.
-          </a>
+          </Link>
         </form>
       </section>
     </div>
