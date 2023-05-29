@@ -1,0 +1,36 @@
+.container {
+    border-radius: 14px;
+    padding: 1rem 3rem;
+    margin: 2rem 1rem 4.4rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.5s;
+    cursor: pointer;
+    border: 1px solid #4b71fd33;
+}
+.container:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    box-shadow: 3px 8px 8px #b7b7b7;
+    border: 1px solid rgb(189, 189, 189);
+}
+
+.capa {
+    border-radius: 15px;
+    width: 150px;
+}
+.container h2{
+    font-size: 15px;
+}
+
+.favoritar {
+    width: 15px;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--preto);
+    ;
+    text-align: left;
+}
