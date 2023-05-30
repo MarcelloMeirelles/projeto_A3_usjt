@@ -9,7 +9,7 @@ export default function LoginWho() {
       <Link to="/">←</Link>
       <h1>Você é....</h1>
       <div className="ticket-cadastro">
-        <Link to="/espectador">
+        <Link to="/login2">
           <img className="mic" src={Microfone} />
           <p>Fan</p>
         </Link>

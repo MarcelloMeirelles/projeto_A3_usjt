@@ -8,6 +8,7 @@ import Evento from "./page/Evento";
 import Evento_show from "./page/Evento_show";
 import Inicio from "./page/Inicio";
 import LoginWho from "./page/LoginWho";
+import Login2 from "./page/Login2";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LoginWho />} />
         <Route exact path="login/" element={<Login />} />
+        <Route exact path="/login2" element={<Login2 />} />
         <Route exact path="/cadastro" element={<CadastroWho />} />
         <Route exact path="/espectador" element={<Espectador />} />
         <Route exact path="/artista" element={<Artista />} />

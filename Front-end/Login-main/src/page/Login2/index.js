@@ -53,7 +53,7 @@ export default function Login() {
         <img src={Banda} alt="Banda" />
       </div>
       <section className="form">
-        <h1>LOGIN BANDA</h1>
+        <h1>LOGIN FAN</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
