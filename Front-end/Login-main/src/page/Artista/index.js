@@ -35,6 +35,7 @@ export default function Artista() {
       console.log("Banda cadastrada com sucesso!");
       toast.success("Banda cadastrada com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
+      window.location.href = "/evento_show";
     } catch (error) {
       console.error("Erro ao cadastrar banda:", error);
       toast.error("Erro ao cadastrar banda");
@@ -147,11 +148,7 @@ export default function Artista() {
               </div>
             </div>
             <div className="cadastrar">
-              <button
-                type="submit"
-                to="/eventos"
-                className={!formValido ? "disabled" : ""}
-              >
+              <button type="submit" className={!formValido ? "disabled" : ""}>
                 CADASTRAR
               </button>
             </div>

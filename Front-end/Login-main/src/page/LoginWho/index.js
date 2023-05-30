@@ -7,7 +7,7 @@ export default function LoginWho() {
   return (
     <main className="container">
       <Link to="/">←</Link>
-      <h1>Você é....</h1>
+      <h1>Bem vindo ao CantAki</h1>
       <div className="ticket-cadastro">
         <Link to="/login2">
           <img className="mic" src={Microfone} />
