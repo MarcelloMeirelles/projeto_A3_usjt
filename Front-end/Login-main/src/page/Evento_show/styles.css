@@ -47,6 +47,7 @@
   width: 45%;
   background: linear-gradient(180deg, #4b72fd 0%, #8092e6 100%);
   border-radius: 0 0 13rem 0;
+  width: fit-content;
 }
 .cantos img {
   margin-left: 2rem;
