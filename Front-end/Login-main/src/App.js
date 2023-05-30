@@ -7,12 +7,14 @@ import Artista from "./page/Artista";
 import Evento from "./page/Evento";
 import Evento_show from "./page/Evento_show";
 import Inicio from "./page/Inicio";
+import LoginWho from "./page/LoginWho";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Login />} />
+        <Route exact path="/" element={<LoginWho />} />
+        <Route exact path="login/" element={<Login />} />
         <Route exact path="/cadastro" element={<CadastroWho />} />
         <Route exact path="/espectador" element={<Espectador />} />
         <Route exact path="/artista" element={<Artista />} />

@@ -1,0 +1,56 @@
+.container {
+    background-color: #fff;
+    width: 80%;
+    max-width: 1120px;
+    height: 400px;
+    margin: 82px auto;
+    border-radius: 8px;
+}
+.container h1{
+    text-align: center;
+}
+.ticket-cadastro{
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-around;
+}
+.ticket-cadastro a{
+    text-decoration: none;
+    justify-content: center;
+    display: flex;
+    width: 30%;
+    height: 150px;
+    background: linear-gradient(180deg, #4B72FD -26.15%, #8092E6 73.85%);
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    border-radius: 15px;
+    align-items: center;
+    transition: all .3s ease-in-out;
+    font-weight: bold;
+}
+.ticket-cadastro a:hover{
+    -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+}
+.ticket-cadastro p{
+    color: white;
+    font-size: 20px;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+.mic{
+    width: 40px;
+    height: 50px;
+}
+.user{
+    width: 60px;
+    height: 50px;
+}
+.container a{
+    color: #283162;
+    text-decoration: none;
+    font-size: 35px;
+    padding-left: 1rem;
+}
