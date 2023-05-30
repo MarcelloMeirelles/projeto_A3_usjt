@@ -17,15 +17,15 @@ export default function Login() {
 
   async function autenticarLogin(email, senha) {
     try {
-      const response = await axios.get("http://localhost:4000/bandas");
-      const bandas = response.data;
+      const response = await axios.get("http://localhost:5000/fan");
+      const fan = response.data;
 
-      // Filtrar apenas o email e a senha das bandas
-      const usuarios = bandas.map(({ email, senha }) => ({ email, senha }));
+      // Filtrar apenas o email e a senha de fan
+      const usuarios = fan.map(({ email, senha }) => ({ email, senha }));
 
       // Verificar se o email e a senha correspondem a algum usuário
       const usuario = usuarios.find(
-        (banda) => banda.email === email && banda.senha === senha
+        (fan) => fan.email === email && fan.senha === senha
       );
 
       if (usuario) {
@@ -33,7 +33,7 @@ export default function Login() {
         console.log("Usuário autenticado:", usuario);
         alert(`Acesso liberado para ${email}`);
         if (usuario) {
-          navigate("/evento"); // Redireciona para a página de evento
+          navigate("/Evento_show"); // Redireciona para a página de evento
         } else {
           navigate("/"); // Redireciona para a página inicial
         }
@@ -43,7 +43,7 @@ export default function Login() {
         alert("Acesso negado. Faça o cadastro.");
       }
     } catch (error) {
-      console.log('Erro ao obter os dados do microserviço "bandas":', error);
+      console.log('Erro ao obter os dados do microserviço "fan":', error);
     }
   }
 
@@ -53,7 +53,7 @@ export default function Login() {
         <img src={Banda} alt="Banda" />
       </div>
       <section className="form">
-        <h1>LOGIN FAN</h1>
+        <h1>LOGIN FÃ</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
