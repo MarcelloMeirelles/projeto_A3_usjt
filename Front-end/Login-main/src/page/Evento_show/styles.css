@@ -128,3 +128,12 @@ select {
   font-size: 35px;
   padding-left: 1rem;
 }
+.show {
+  background-image: url("../../assets/show.png");
+  background-size: cover; 
+  background-repeat: no-repeat;
+  width: 200px; 
+  height: 200px; 
+  background-position: center center;
+  
+}

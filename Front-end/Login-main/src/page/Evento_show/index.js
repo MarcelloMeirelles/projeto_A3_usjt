@@ -3,6 +3,7 @@ import axios from "axios";
 import "./styles.css";
 import Cantor from "../../assets/cantor.png";
 import { Link } from "react-router-dom";
+import Show from "../../assets/show.png";
 
 export default function Eventos() {
   const [eventos, setEventos] = useState([]);
@@ -27,6 +28,8 @@ export default function Eventos() {
       </div>
       {eventos.map((evento) => (
         <div className="event-card" key={evento._id}>
+          <div className="show">
+          </div>
           <h3>{evento.banda.nome}</h3>
           <p>Quantidade de membros: {evento.banda.qtdMembros}</p>
           <p>Gênero: {evento.banda.genero}</p>
