@@ -28,7 +28,7 @@ export default function Espectador() {
       console.log("FÃ cadastrado com sucesso!");
       toast.success("FÃ cadastrado com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
-      window.location.href = "/evento_show";
+      window.location.href = "/login2";
     } catch (error) {
       console.error("Erro ao cadastrar fÃ:", error);
       toast.error("Erro ao cadastrar fÃ");

@@ -79,12 +79,6 @@ export default function Login() {
           <Link to="/cadastro" className="ultimo">
             Não tem cadastro? Cadastrar
           </Link>
-          <Link to="/evento" className="ultimo">
-            Para cadastrar evento.
-          </Link>
-          <Link to="/evento_show" className="ultimo">
-            Para exibir eventos.
-          </Link>
         </form>
       </section>
     </div>
