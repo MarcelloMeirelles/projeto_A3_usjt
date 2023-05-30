@@ -11,7 +11,7 @@ export default function LoginWho() {
       <div className="ticket-cadastro">
         <Link to="/login2">
           <img className="mic" src={Microfone} />
-          <p>Fa</p>
+          <p>Fã</p>
         </Link>
         <Link to="/login">
           <img className="user" src={User} />

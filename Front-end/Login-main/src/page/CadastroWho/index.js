@@ -11,7 +11,7 @@ export default function CadastroWho() {
       <div className="ticket-cadastro">
         <Link to="/espectador">
           <img className="mic" src={Microfone} />
-          <p>Fan</p>
+          <p>Fã</p>
         </Link>
         <Link to="/artista">
           <img className="user" src={User} />
