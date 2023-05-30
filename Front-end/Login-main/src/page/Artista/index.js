@@ -35,7 +35,7 @@ export default function Artista() {
       console.log("Banda cadastrada com sucesso!");
       toast.success("Banda cadastrada com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
-      window.location.href = "/evento_show";
+      window.location.href = "/evento";
     } catch (error) {
       console.error("Erro ao cadastrar banda:", error);
       toast.error("Erro ao cadastrar banda");

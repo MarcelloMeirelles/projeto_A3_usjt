@@ -57,7 +57,7 @@ export default function CriarEvento() {
     try {
       await axios.post("http://localhost:7000/evento", eventoData);
       console.log("Evento criado com sucesso!");
-      toast.success("Fan cadastrado com sucesso!");
+      toast.success("Evento cadastrado com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
     } catch (error) {
       console.error("Erro ao criar evento:", error);

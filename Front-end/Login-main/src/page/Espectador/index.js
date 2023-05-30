@@ -25,12 +25,13 @@ export default function Espectador() {
 
     try {
       await axios.post("http://localhost:5000/fan", fanData);
-      console.log("Fan cadastrado com sucesso!");
-      toast.success("Fan cadastrado com sucesso!");
+      console.log("FÃ cadastrado com sucesso!");
+      toast.success("FÃ cadastrado com sucesso!");
       // Redirecionar para outra página, exibir mensagem de sucesso, etc.
+      window.location.href = "/evento_show";
     } catch (error) {
-      console.error("Erro ao cadastrar fan:", error);
-      toast.error("Erro ao cadastrar fan");
+      console.error("Erro ao cadastrar fÃ:", error);
+      toast.error("Erro ao cadastrar fÃ");
       // Exibir mensagem de erro, tratar falha no cadastro, etc.
     }
   };
@@ -58,7 +59,7 @@ export default function Espectador() {
           <img src={Cantor} />
         </div>
         <div className="cadastro">
-          <h1>CADASTRO DE FAN</h1>
+          <h1>CADASTRO DE FÃ</h1>
           <form onSubmit={handleCadastro}>
             <p>Nome Completo:</p>
             <br />
