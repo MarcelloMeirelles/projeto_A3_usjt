@@ -125,6 +125,11 @@ export default function CriarEvento() {
             <div className="cadastrar">
               <button type="submit">CRIAR EVENTO</button>
             </div>
+            <div className="verEventos">
+              <Link to="/evento_show">
+                <button type="button">VER EVENTOS</button>
+              </Link>
+            </div>
           </form>
         </div>
       </div>
